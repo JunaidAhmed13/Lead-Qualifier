@@ -12,6 +12,12 @@ const handler: Handler = async (event) => {
 
   try {
     const body = JSON.parse(event.body || '{}')
+
+    // Ensure budget is always forwarded as a plain string
+    if (body.budget !== undefined) {
+      body.budget = String(body.budget)
+    }
+
     const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
